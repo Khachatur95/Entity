@@ -10,7 +10,27 @@ namespace Entity_FirstApp
     {
         static void Main(string[] args)
         {
-            User user = new User();
+            using (UserContext db = new UserContext())
+            {
+
+                User user1 = new User { Name = "Tom", Age = 33 };
+                User user2 = new User { Name = "Sam", Age = 26 };
+
+
+                db.Users.Add(user1);
+                db.Users.Add(user2);
+                db.SaveChanges();
+                WriteLine("Object saved succesfully");
+
+                var users = db.Users;
+                WriteLine("List of objects");
+                foreach (User u in users)
+                {
+                    WriteLine("{0}.{1}-{2}" , u.Id, u.Name, u.Age);
+                }
+            }
+            Read();
+
         }
     }
 }
